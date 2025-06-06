@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LANCE TON BUSINESS DE LOCATION CHEZ NABIL.DRIVE</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Urbanist:wght@700&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/81b4c5c1fa.js" crossorigin="anonymous"></script>
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    :root {
+      --fond: #181e2a;
+      --blanc: #fff;
+      --lux-shadow: 0 3px 30px #2228;
+      --btn-grad: linear-gradient(90deg, #444 70%, #222 120%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      min-height: 100vh;
+      background: var(--fond);
+      color: var(--blanc);
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Urbanist', 'Montserrat', Arial, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .background-cars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1600&q=80') center center/cover no-repeat;
+      opacity: 0.15;
+      filter: blur(4px) brightness(0.7);
+      pointer-events: none;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(22,24,38,0.96) 60%, rgba(25,28,50,0.95) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    header {
+      position: relative;
+      z-index: 2;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      background: transparent;
+    }
+    .main-banner {
+      width: 100%;
+      padding: 80px 10vw 60px 10vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(90deg, #4443 0%, #fff0 100%);
+      border-bottom: 7px solid #222;
+      box-shadow: 0 10px 50px #2224;
+      position: relative;
+    }
+    .main-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 3.5em;
+      color: #fff;
+      text-shadow: 0 8px 32px #2228, 0 2px 16px #191d27cc;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      border-bottom: 4px solid #444;
+      padding-bottom: 20px;
+      max-width: 900px;
+      margin-bottom: 0.75em;
+      display: inline-block;
+      animation: fadeInDown 1.3s cubic-bezier(.8,0,.2,1) both;
+      line-height: 1.13;
+      word-break: break-word;
+      word-wrap: break-word;
+    }
+    .main-title .emoji {
+      font-size: 1.22em;
+      filter: none;
+      vertical-align: middle;
+      margin: 0 0.12em;
+      animation: bounceEmoji 1.1s infinite alternate;
+    }
+    @keyframes bounceEmoji {
+      0% { transform: translateY(0);}
+      100% { transform: translateY(-12px);}
+    }
+    @media (max-width: 700px) {
+      .main-title {
+        font-size: 2em;
+        padding-bottom: 12px;
+        max-width: 98vw;
+      }
+      .main-title span {
+        display: inline-block;
+      }
+      .main-title br {
+        display: block;
+      }
+    }
+    .main-title span[style] {
+      color: #fff !important;
+      background: #222 !important;
+      padding: 0 8px !important;
+      border-radius: 6px !important;
+      display: inline-block;
+      margin-top: 6px;
+    }
+    .subtitle {
+      font-size: 1.3em;
+      color: #fffbe6;
+      font-family: 'Urbanist', Arial, sans-serif;
+      font-weight: 700;
+      margin: 0 auto 1.3em auto;
+      text-shadow: 0 1px 10px #0008;
+      max-width: 700px;
+      animation: fadeInUp 1.5s;
+      letter-spacing: 0.3px;
+    }
+    .traffic-lights-animated {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      margin: 40px 0 34px 0;
+      animation: fadeIn 1.4s;
+    }
+    .traffic-light {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 6px solid #222;
+      box-shadow: 0 4px 20px #000c, 0 0 90px #2226 inset;
+      background: #232323;
+      display: inline-block;
+      position: relative;
+    }
+    .traffic-light.red {
+      box-shadow: 0 0 54px 16px #ff3c3cbb, 0 0 40px #2228 inset;
+      animation: redlight 1.7s cubic-bezier(.8,0,.2,1) infinite;
+      background: radial-gradient(circle at 60% 40%, #ff3c3c 80%, #b02c2c 100%);
+    }
+    .traffic-light.orange {
+      box-shadow: 0 0 54px 16px #aa8a3a, 0 0 40px #2228 inset;
+      animation: orangelight 1.7s cubic-bezier(.8,0,.2,1) infinite;
+      background: radial-gradient(circle at 60% 40%, #bbb06d 80%, #b08d2c 100%);
+    }
+    .traffic-light.green {
+      box-shadow: 0 0 54px 16px #43ffa9bb, 0 0 40px #2228 inset;
+      animation: greenlight 1.7s cubic-bezier(.8,0,.2,1) infinite;
+      background: radial-gradient(circle at 60% 40%, #31ff6a 80%, #1b9c36 100%);
+    }
+    @keyframes redlight {
+      0%, 100% { filter: brightness(1); }
+      15% { filter: brightness(2.2) drop-shadow(0 0 20px #ff3c3c); }
+      16%, 32% { filter: brightness(1); }
+    }
+    @keyframes orangelight {
+      0%, 33% { filter: brightness(1); }
+      50% { filter: brightness(2.2) drop-shadow(0 0 20px #bbb06d); }
+      51%, 100% { filter: brightness(1); }
+    }
+    @keyframes greenlight {
+      0%, 66% { filter: brightness(1); }
+      83% { filter: brightness(2.3) drop-shadow(0 0 20px #43ffa9); }
+      84%, 100% { filter: brightness(1); }
+    }
+    .valorisation {
+      margin: 18px auto 0 auto;
+      font-size: 1.18em;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 800;
+      background: rgba(30,30,30,0.5);
+      display: inline-block;
+      padding: 10px 28px;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #2228;
+      letter-spacing: 1px;
+      text-shadow: 0 3px 16px #0006;
+      animation: fadeIn 1.9s;
+    }
+    .stars {
+      font-size: 2.2em;
+      color: #fff;
+      margin: 20px 0 0 0;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 8px #2228;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      display: block;
+      animation: fadeIn 2s;
+    }
+    .cta-button {
+      margin-top: 32px;
+      padding: 18px 44px;
+      background: var(--btn-grad);
+      color: #fff;
+      border-radius: 16px;
+      border: none;
+      font-weight: bold;
+      font-size: 1.13em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      cursor: pointer;
+      letter-spacing: 1.2px;
+      box-shadow: 0 2px 16px #2228;
+      font-weight: 900;
+      animation: fadeInUp 1.6s;
+      transition: background 0.3s, color 0.3s, transform 0.15s, box-shadow .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-button:after {
+      content: "";
+      position: absolute;
+      left: -70%;
+      top: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(120deg, #fff4 0%, #fff0 100%);
+      transform: skewX(-20deg);
+      transition: all .4s cubic-bezier(.8,0,.2,1);
+    }
+    .cta-button:hover {
+      background: linear-gradient(90deg, #333 60%, #222 120%);
+      color: #fff;
+      transform: scale(1.09);
+      box-shadow: 0 6px 38px #222b;
+    }
+    .cta-button:hover:after {
+      left: 140%;
+      transition: all .4s cubic-bezier(.8,0,.2,1);
+    }
+    .roadband {
+      height: 16px;
+      width: 100vw;
+      background: repeating-linear-gradient(
+        90deg,
+        #fff 0 44px,
+        #fff0 44px 88px
+      );
+      margin: 0 0 40px 0;
+      filter: drop-shadow(0 3px 12px #fff8);
+      opacity: 0.35;
+    }
+    main {
+      position: relative;
+      z-index: 2;
+    }
+    .section {
+      padding: 56px 32px 44px 32px;
+      max-width: 1150px;
+      margin: 40px auto 0 auto;
+      background: rgba(24,27,46,0.97);
+      border-radius: 20px;
+      box-shadow: var(--lux-shadow);
+      margin-bottom: 22px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px) scale(0.98);
+      transition: opacity .8s cubic-bezier(.8,0,.2,1), transform .8s cubic-bezier(.8,0,.2,1);
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .section h2 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      font-size: 2.2em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      color: #fff;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      border-bottom: 3px solid #444;
+      display: inline-block;
+      padding-bottom: 10px;
+      animation: titleglow 1.5s alternate infinite;
+    }
+    @keyframes titleglow {
+      0% { filter: drop-shadow(0 0 0 #2224);}
+      100% { filter: drop-shadow(0 0 16px #222b);}
+    }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 36px;
+    }
+    .feature {
+      background: rgba(30,30,30,0.92);
+      padding: 28px 18px;
+      border-radius: 14px;
+      max-width: 310px;
+      min-width: 220px;
+      font-size: 1.15em;
+      font-family: 'Urbanist', Arial, sans-serif;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 18px #2227;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: scale(0.95) translateY(60px);
+      animation: none;
+    }
+    .feature.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      animation: zoomIn .8s cubic-bezier(.8,0,.2,1) both;
+    }
+    @keyframes zoomIn {
+      0% { opacity: 0; transform: scale(0.95) translateY(60px);}
+      100% { opacity: 1; transform: scale(1) translateY(0);}
+    }
+    .provider-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.3em;
+      font-weight: 800;
+      color: #fff;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      border-bottom: 3px solid #444;
+      text-shadow: none;
+      letter-spacing: 1.6px;
+      margin: 36px 0 26px 0;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 34px;
+      justify-content: center;
+      margin-bottom: 8px;
+      margin-top: 0;
+    }
+    .gallery img {
+      width: 100%;
+      min-width: 240px;
+      max-width: 340px;
+      min-height: 210px;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 3px solid #222;
+      background: #111;
+      box-shadow: 0 6px 32px #2228, 0 2px 10px #0008;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      opacity: 0;
+      transform: scale(0.96) translateY(30px);
+    }
+    .gallery img.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      animation: zoomIn .8s cubic-bezier(.8,0,.2,1) both;
+    }
+    .videos-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 30px;
+    }
+    .video-embed {
+      flex: 1 1 340px;
+      max-width: 420px;
+      min-width: 280px;
+      min-height: 300px;
+      border-radius: 18px;
+      box-shadow: 0 4px 28px #2228;
+      background: #181b2e;
+      overflow: hidden;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: scale(0.97) translateY(40px);
+      transition: all .7s cubic-bezier(.8,0,.2,1);
+    }
+    .video-embed.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      animation: slideInUp .7s cubic-bezier(.8,0,.2,1) both;
+    }
+    @keyframes slideInUp {
+      0% { opacity: 0; transform: scale(0.97) translateY(40px);}
+      100% { opacity: 1; transform: scale(1) translateY(0);}
+    }
+    .video-embed iframe {
+      width: 100%;
+      height: 240px;
+      border: none;
+      border-radius: 18px;
+      display: block;
+      background: #181b2e;
+    }
+    .socials-section {
+      background: rgba(30,30,38,0.92);
+      border-radius: 16px;
+      box-shadow: 0 2px 26px #2226;
+      margin: 60px auto 30px auto;
+      max-width: 660px;
+      padding: 36px 22px 26px 22px;
+      text-align: center;
+      border: 2px solid #222;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity .8s cubic-bezier(.8,0,.2,1), transform .8s cubic-bezier(.8,0,.2,1);
+    }
+    .socials-section.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      animation: zoomIn .8s cubic-bezier(.8,0,.2,1) both;
+    }
+    .socials-section h3 {
+      font-size: 1.6em;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      margin-bottom: 18px;
+    }
+    .socials-section .socials {
+      font-size: 1.2em;
+      letter-spacing: 0.15em;
+      margin-top: 8px;
+    }
+    .socials-section .socials a {
+      color: #fff;
+      font-weight: 700;
+      margin: 0 9px;
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+      border-radius: 6px;
+      padding: 2px 8px;
+      background: #222;
+    }
+    .socials-section .socials a:hover {
+      color: #222;
+      background: #fff;
+    }
+    footer {
+      background: #18181d;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-top: 2px solid #222;
+      box-shadow: 0 -3px 14px #2228;
+      margin-top: 40px;
+      z-index: 2;
+      position: relative;
+      text-align: center;
+      padding: 36px 10px 25px 10px;
+      font-size: 1.08em;
+    }
+    .socials-footer {
+      margin: 22px 0 6px 0;
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+    }
+    .socials-footer a {
+      color: #fff;
+      font-size: 1.5em;
+      transition: color 0.2s, transform 0.18s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .socials-footer a:hover {
+      color: #222;
+      transform: scale(1.1);
+    }
+    @media (max-width: 800px) {
+      .main-title { font-size: 2em; }
+      .section { padding: 32px 2vw 18px 2vw; }
+      .gallery img { max-width: 98vw; min-width: 80vw; min-height: 100px; max-height: 140px;}
+      .feature { max-width: 98vw; }
+      .videos-list { flex-direction: column; gap: 22px; }
+      .video-embed { max-width: 98vw; }
+      .main-banner { padding: 38px 2vw 32px 2vw; }
+    }
+  </style>
+  <!-- Effet sonore traffic light -->
+  <audio id="feulight-audio" preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_12b4f5a4f2.mp3" type="audio/mp3">
+  </audio>
+  <script>
+    // Animation sonore sur les feux
+    window.addEventListener('DOMContentLoaded', () => {
+      const lights = document.querySelectorAll('.traffic-light');
+      const audio = document.getElementById('feulight-audio');
+      let last = 0;
+      setInterval(() => {
+        last = (last + 1) % 3;
+        lights.forEach((light, idx) => {
+          if(idx === last && audio) {
+            audio.currentTime = 0;
+            audio.volume = 0.20;
+            audio.play();
+          }
+        });
+      }, 1400);
+
+      // Animation on scroll for .section, .feature, .gallery img, .video-embed, .socials-section
+      const revealOnScroll = () => {
+        const reveals = document.querySelectorAll('.section, .feature, .gallery img, .video-embed, .socials-section');
+        const windowHeight = window.innerHeight;
+        reveals.forEach(el => {
+          const top = el.getBoundingClientRect().top;
+          if (top < windowHeight - 70) el.classList.add('visible');
+        });
+      };
+      window.addEventListener('scroll', revealOnScroll);
+      revealOnScroll();
+    });
+  </script>
+</head>
+<body>
+<div class="background-cars"></div>
+<div class="overlay"></div>
+
+<header>
+  <div class="main-banner">
+    <h1 class="main-title">
+      <span class="emoji">🚘</span>
+      LANCE TON BUSINESS DE LOCATION <br>
+      CHEZ <span style="color:#fff; background:#222; padding:0 8px; border-radius:6px;">NABIL.DRIVE</span>
+      <span class="emoji">🚀</span>
+    </h1>
+    <div class="subtitle">
+      🚗💸 Transforme ta passion pour les voitures en business rentable<br>
+      🛣️ Passe à la vitesse supérieure et atteins tes objectifs avec Nabil.Drive 🏁<br>
+      🚦 Démarre aujourd’hui, la réussite t’attend ! 📈🔥
+    </div>
+    <div class="traffic-lights-animated">
+      <span class="traffic-light red"></span>
+      <span class="traffic-light orange"></span>
+      <span class="traffic-light green"></span>
+    </div>
+    <div class="roadband"></div>
+    <div class="valorisation">+40 élèves & déjà <span style="color:#fff;">plus de 4,9/5</span> sur Trustpilot 🏆</div>
+    <div class="stars">★★★★★</div>
+    <a href="https://calendly.com/nabildrive/nabil-drive?month=2025-06" class="cta-button">👉📞 Réserve ton appel maintenant 📲🔥</a>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <h2>🔥 L’EXCELLENCE NABIL DRIVE 🚗</h2>
+    <div class="features">
+      <div class="feature">✅ Crée ta société légalement à Dubai ou Belgique 🛣️</div>
+      <div class="feature">🚗 Obtiens des voitures sans les acheter 💸</div>
+      <div class="feature">💼 Attire une clientèle haut de gamme 🏁</div>
+      <div class="feature">⚙️ Automatise ton business 📈</div>
+      <div class="feature">📱 Boost ta visibilité avec Insta & Google 🔥</div>
+      <div class="feature">🎯 Méthode pas à pas + accompagnement premium 🚦</div>
+    </div>
+    <div class="provider-title">🏆 Les meilleurs fournisseurs du marché 🏆</div>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80" alt="Supercar IA luxe 1" />
+      <img src="https://images.unsplash.com/photo-1461632830798-3adb3034e4c8?auto=format&fit=crop&w=600&q=80" alt="Supercar IA luxe 2" />
+    </div>
+  </section>
+  <section class="section">
+    <h2>📺 Vidéos explicatives 🚀</h2>
+    <div class="videos-list">
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/Gz6lsj-lTp8" allowfullscreen title="Vidéo 1"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/0Ik8KG2LRfg" allowfullscreen title="Vidéo 2"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/8NNL0sUYW0Q" allowfullscreen title="Vidéo 3"></iframe>
+      </div>
+    </div>
+  </section>
+  <section class="socials-section">
+    <h3>📱 Retrouve-moi sur les réseaux 🚘💬</h3>
+    <div class="socials">
+      <a href="https://www.instagram.com/nabil.drive" target="_blank">📸 Instagram</a> |
+      <a href="https://snapchat.com/t/3iUAVS6L" target="_blank">👻 Snapchat</a> |
+      <a href="https://www.tiktok.com/@nabil.drive" target="_blank">🎥 TikTok</a> |
+      <a href="https://youtube.com/@nabildrive" target="_blank">📺 YouTube</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="socials-footer">
+    <a href="https://www.instagram.com/nabil.drive" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://snapchat.com/t/3iUAVS6L" target="_blank" title="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+    <a href="https://www.tiktok.com/@nabil.drive" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    <a href="https://youtube.com/@nabildrive" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="https://formation-nabildrive.fr" target="_blank" title="Site officiel"><i class="fas fa-globe"></i></a>
+  </div>
+  <p>🏁 &copy; 2025 Nabil Drive - Tous droits réservés 🏁</p>
+</footer>
+<script>
+  // Ensure animation on scroll for initial load also
+  window.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.section, .feature, .gallery img, .video-embed, .socials-section');
+    const windowHeight = window.innerHeight;
+    reveals.forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if (top < windowHeight - 70) el.classList.add('visible');
+    });
+  });
+</script>
+</body>
+</html>
